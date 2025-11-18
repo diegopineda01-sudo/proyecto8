@@ -10,8 +10,8 @@ export default function TaskCard({ task, column }) {
     }
 
     const moveRight = () => {
-        if (column === "doing") return moveTask(task.id, "todo")
-        if (column === "done") return moveTask(task.id, "doing")
+        if (column === "todo") return moveTask(task.id, "doing")
+        if (column === "doing") return moveTask(task.id, "done")
     }
 
     return (

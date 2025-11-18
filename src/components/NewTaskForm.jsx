@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useKanban } from "../context/useKanban";
 
 export default function AddTask(){
-    const {title, setTitle} = useState("");
+    const [title, setTitle] = useState("");
     const { addTask } = useKanban();
 
     const handleSubmit = (e) =>{

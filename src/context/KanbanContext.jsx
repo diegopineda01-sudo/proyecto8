@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
-
-const KanbanContext = createContext();
+  
+export const KanbanContext = createContext();
 
 // Proveedor
 export function KanbanProvider({ children }) {

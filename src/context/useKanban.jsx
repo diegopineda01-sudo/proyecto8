@@ -1,4 +1,4 @@
 import { useContext } from "react";
-import { kanbanContext } from "./KanbanContext";
+import { KanbanContext } from "./KanbanContext";
 
-export const useKanban = () => useContext(kanbanContext);
+export const useKanban = () => useContext(KanbanContext);
