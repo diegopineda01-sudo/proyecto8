@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useKanban } from "../context/KanbanContext";
+import { useKanban } from "../context/useKanban";
 
 export default function AddTask(){
     const {title, setTitle} = useState("");

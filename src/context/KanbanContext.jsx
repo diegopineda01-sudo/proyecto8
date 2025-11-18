@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 const KanbanContext = createContext();
 
@@ -9,6 +9,60 @@ export function KanbanProvider({ children }) {
     doing: [],
     done: [],
   });
+
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const saved = localStorage.getItem("KanbanData");
+
+    if (saved && isMounted) {
+      // Hacer setState asíncrono para evitar el warning
+      setTimeout(() => {
+        if (isMounted) {
+          setColumns(JSON.parse(saved));
+        }
+      }, 0);
+      return;
+    }
+
+    fetch("https://dummyjson.com/todos?limit=5")
+      .then((res) => res.json())
+      .then((data) => {
+        if (!isMounted) return;
+
+        const mapped = {
+          todo: [],
+          doing: [],
+          done: [],
+        };
+
+        data.todos.forEach((t) => {
+          const task = {
+            id: t.id,
+            title: t.todo,
+          };
+
+          if (t.completed) {
+            mapped.done.push(task);
+          } else {
+            mapped.todo.push(task);
+          }
+        });
+
+        setColumns(mapped);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+
+  useEffect(() => {
+    localStorage.setItem("KanbanData", JSON.stringify(columns))
+  }, [columns]);
+
 
   // Agregar Tarea 
   const addTask = (title) => {
@@ -49,6 +103,3 @@ export function KanbanProvider({ children }) {
     </KanbanContext.Provider>
   );
 }
-
-// Hook para usar el contexto
-export const useKanban = () => useContext(KanbanContext);
