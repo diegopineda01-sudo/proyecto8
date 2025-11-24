@@ -1,10 +1,9 @@
-import { useState } from "react"; 
+import { useState } from "react";
 import { useKanban } from "../context/useKanban";
 import "../Styles/TaskCard.css"
 
 export default function TaskCard({ task, column }) {
-    const { moveTask, updateTask } = useKanban(); 
-
+    const { moveTask, updateTask } = useKanban();
     const [isEditing, setIsEditing] = useState(false);
     const [editTitle, setEditTitle] = useState(task.title);
 
@@ -14,35 +13,33 @@ export default function TaskCard({ task, column }) {
 
     const handleSave = () => {
         if (editTitle.trim()) {
-            updateTask(task.id, editTitle); 
-            setIsEditing(false); 
+            updateTask(task.id, editTitle);
+            setIsEditing(false);
         }
     };
 
     return (
         <div className={`task-card ${column}`}>
-            
             {isEditing ? (
-                <div style={{ marginBottom: "10px" }}>
+                <div className="edit-container">
                     <input 
                         autoFocus
                         type="text" 
                         value={editTitle} 
                         onChange={(e) => setEditTitle(e.target.value)}
-                        style={{ width: "90%", padding: "5px", marginBottom: "5px" }}
+                        className="edit-input"
                     />
-                    <div>
-                        <button onClick={handleSave} style={{ cursor: "pointer", marginRight: "5px" }}>OK</button>
-                        <button onClick={() => setIsEditing(false)} style={{ cursor: "pointer" }}>X</button>
+                    <div className="edit-actions">
+                        <button onClick={handleSave} className="btn-save">OK</button>
+                        <button onClick={() => setIsEditing(false)} className="btn-cancel">X</button>
                     </div>
                 </div>
             ) : (
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
-                    <p className="title">{task.title}</p> 
-                    
+                <div className="task-header">
+                    <p className="title">{task.title}</p>
                     <button 
-                        onClick={() => setIsEditing(true)}
-                        style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.2rem" }}
+                        onClick={() => setIsEditing(true)} 
+                        className="btn-edit"
                         title="Edit Task"
                     >
                         ✎
